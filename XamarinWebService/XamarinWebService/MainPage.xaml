@@ -3,18 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XamarinWebService.MainPage">
 
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource AppPrimaryColor}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <StackLayout Margin="20,35,20,20">
+        
         <Button Text="Get Repository Data" Clicked="OnFetchButtonClicked" CornerRadius="10" BackgroundColor="#1976D2"/>
-        <CollectionView x:Name="collectionView">
+        
+        <CollectionView x:Name="collectionView" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Horizontal" Margin="10">
-                        <Image Source="{Binding Thumbnail}" Aspect="AspectFit"/>
-                        <Label Text="{Binding Name}" TextColor="Black" FontSize="20"/>
-                        <Label Text="{Binding Lastname}" TextColor="Black" FontSize="20"/>
-                    </StackLayout>
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+             
+                        <Image Grid.RowSpan="2" 
+                               Source="{Binding Thumbnail}" 
+                               Aspect="AspectFill" 
+                               HeightRequest="60" 
+                               WidthRequest="60"/>
+                        
+                        <Label Grid.Column="1" 
+                               Text="{Binding Name}" 
+                               TextColor="Black" 
+                               FontSize="20"/>
+                        
+                        <Label Grid.Row="0" 
+                               Grid.Column="2" 
+                               Text="{Binding Lastname}" 
+                               TextColor="Black" FontSize="20" 
+                               VerticalOptions="End"/>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        
     </StackLayout>
 </ContentPage>

@@ -28,11 +28,6 @@ namespace XamarinWebService.Services
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     person = JsonConvert.DeserializeObject<PersonRepository.Root>(content);
-
-                    for (int i = 0; i < person.Results.Count; i++)
-                    {
-                        Debug.WriteLine(person.Results[i].Name.First);
-                    }
                 }
             }
             catch (Exception ex)

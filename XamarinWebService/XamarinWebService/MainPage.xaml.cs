@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using Xamarin.Forms;
 using XamarinWebService.Models;
 using XamarinWebService.Repository;
 using XamarinWebService.Services;
+using XamarinWebService.Views;
 
 namespace XamarinWebService
 {
@@ -38,6 +40,22 @@ namespace XamarinWebService
             }
 
             collectionView.ItemsSource = persons;
+        }
+
+        async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (e.CurrentSelection != null)
+                {
+                    Person person = (Person)e.CurrentSelection.FirstOrDefault();                   
+                    await Shell.Current.GoToAsync($"{nameof(PersonDetailPage)}?{nameof(PersonDetailPage.ItemName)}={person.Name}&{nameof(PersonDetailPage.ItemLastname)}={person.Lastname}&{nameof(PersonDetailPage.ItemThumbnail)}={person.Thumbnail}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tErro {ex.Message}");
+            }
         }
     }
 }
